@@ -36,7 +36,7 @@ export function App() {
       <Button
         onClick={() => setButtonColor((c) => (c === 'red' ? 'blue' : 'red'))}
         color={buttonColor}
-        backgroundColor="yellow"
+        backgroundColor="whitesmoke"
       >
         {buttonColor.toUpperCase()}
       </Button>
