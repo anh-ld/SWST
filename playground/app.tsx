@@ -1,52 +1,84 @@
-import { useState } from 'preact/hooks'
+import { useState, useRef } from 'preact/hooks'
 import preactLogo from './assets/preact.svg'
-import './app.css'
 import { setup, styled } from '../src/'
 import { createElement } from 'preact'
 import { forwardRef } from 'preact/compat';
-
 
 setup({
   createElement,
   forwardRef,
 })
 
-export function App() {
-  const [buttonColor, setButtonColor] = useState('red');
+const ImgStyle = {
+  height: '6em',
+  padding: '1.5em',
+}
 
-  const Button2 = styled('button', {
-    color: 'blue',
-    background: 'white',
-    'font-weight': 'bold',
-    padding: '10px',
-    border: '2px solid green',
-    outline: 'none',
-    'border-radius': '8px',
-    '&:hover': {
-      background: 'blue'
-    }
-  })
+const StyledViteImg = styled('img', {
+  ...ImgStyle,
+
+  '&:hover': {
+    filter: 'drop-shadow(0 0 2em #646cffaa)'
+  }
+})
+
+const StyledPreactImg = styled('img', {
+  ...ImgStyle,
+
+  '&:hover': {
+    filter: 'drop-shadow(0 0 2em #673ab8aa)'
+  }
+})
+
+const StyledCard = styled('div', {
+  padding: '2em'
+})
+
+const StyledReadTheDocs = styled('p', {
+  color: '#246ee4',
+  'font-weight': 500
+})
+
+const StyledButton = styled('button', (props: any) => ({
+  'border-radius': '8px',
+  border: '1px solid transparent',
+  padding: '0.6em 1.2em',
+  'font-size': '1em',
+  'font-weight': 500,
+  'font-family': 'inherit',
+  'background-color': props.count % 2 === 0 ? '#d4a' : '#3b4',
+  cursor: 'pointer'
+}))
+
+export function App() {
+  const [count, setCount] = useState(0)
+  const buttonRef = useRef()
+
+  console.log('Button Ref', buttonRef.current)
 
   return (
     <>
       <div>
         <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" class="logo" alt="Vite logo" />
+          <StyledViteImg src="/vite.svg" alt="Vite logo" />
         </a>
         <a href="https://preactjs.com" target="_blank">
-          <img src={preactLogo} class="logo preact" alt="Preact logo" />
+          <StyledPreactImg src={preactLogo} alt="Preact logo" />
         </a>
       </div>
       <h1>Vite + Preact</h1>
-
-      {/* <Button
-        onClick={() => setButtonColor((c) => (c === 'red' ? 'blue' : 'red'))}
-        color={buttonColor}
-        backgroundColor="whitesmoke"
-      >
-        {buttonColor.toUpperCase()}
-      </Button> */}
-      <Button2>Hihi</Button2>
+      <StyledCard>
+        <StyledButton
+          onClick={() => setCount((count) => count + 1)}
+          count={count}
+          ref={buttonRef}
+        >
+          count is {count}
+        </StyledButton>
+      </StyledCard>
+      <StyledReadTheDocs>
+        open console and inspect element to view generated CSS classes
+      </StyledReadTheDocs>
     </>
   )
 }

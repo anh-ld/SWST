@@ -8,7 +8,7 @@ export const parseStyle =
 
       acc[key] +=  parseStyle(value)['&']
     } else {
-      acc['&'] += `${key.trim()}:${(value as string).trim()};`
+      acc['&'] += `${key.trim()}:${(String(value) as string).trim()};`
     }
 
     return acc
