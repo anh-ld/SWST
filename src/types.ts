@@ -1,1 +1,3 @@
-export type ApplyPropsFn = (props: any) => any
+export type ParsedStyleObject = {
+  [key: string]: string
+}

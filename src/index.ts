@@ -1,9 +1,8 @@
-import { generateUniqueId, getStyleStringFromTemplate } from './utils';
-import type { ApplyPropsFn } from "./types";
+import { generateUniqueId, parseStyle } from './utils';
 
 let styleElement: HTMLStyleElement;
 let config = {
-  prefix: 'gbr',
+  prefix: 'g',
   createElement: undefined,
   forwardRef: undefined
 };
@@ -18,29 +17,33 @@ const setup = (setupConfig = {}) => {
   document.head.appendChild(styleElement);
 };
 
-const styled =
-  (tag: string) =>
-  (string: TemplateStringsArray, ...keys: ApplyPropsFn[]) => {
-    const { forwardRef, createElement, prefix } = config;
+const styled = (tag: string, styles: any) => {
+  const { createElement, forwardRef, prefix } = config
 
-    function Component<T>(props: T, ref = undefined) {
-      /* generate style string */
-      const styleString = getStyleStringFromTemplate(string, ...keys)(props);
+  function Component<T>(props: T, ref = undefined) {
+    const styleObject = typeof styles === 'function' ? styles(props): styles;
+    const parsedStyleObject = parseStyle(styleObject)
+    let className = ''
+
+    Object.entries(parsedStyleObject).map(([key, value]) => {
+      const styleString = `${key}{${value}}`
       let styleClassName;
 
-      /* if style is already existed, get from map, else generate new className */
       if (styleMap.has(styleString)) {
         styleClassName = styleMap.get(styleString);
       } else {
         styleClassName = generateUniqueId(prefix);
         styleMap.set(styleString, styleClassName);
-        (styleElement.sheet as CSSStyleSheet).insertRule(`.${styleClassName}{${styleString}}`);
+        (styleElement.sheet as CSSStyleSheet).insertRule(styleString.replace(/&/g, `.${styleClassName}`));
       }
 
-      return (createElement as any)(tag, { ...props, ref, className: styleClassName });
-    }
+      className = className + ' ' + styleClassName
+    })
 
-    return forwardRef ? (forwardRef as any)(Component) : Component;
-  };
+    return (createElement as any)(tag, { ...props, ref, className: className.trim() })
+  }
+
+  return forwardRef ? (forwardRef as any)(Component) : Component;
+}
 
 export { styled, setup };

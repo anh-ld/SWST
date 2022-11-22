@@ -7,7 +7,6 @@ import { forwardRef } from 'preact/compat';
 
 
 setup({
-  prefix: '',
   createElement,
   forwardRef,
 })
@@ -15,11 +14,18 @@ setup({
 export function App() {
   const [buttonColor, setButtonColor] = useState('red');
 
-  const Button = styled('button')`
-    color: ${(props: any) => props.color};
-    background: ${(props: any) => props.backgroundColor};
-    font-weight: bold;
-  `;
+  const Button2 = styled('button', {
+    color: 'blue',
+    background: 'white',
+    'font-weight': 'bold',
+    padding: '10px',
+    border: '2px solid green',
+    outline: 'none',
+    'border-radius': '8px',
+    '&:hover': {
+      background: 'blue'
+    }
+  })
 
   return (
     <>
@@ -33,13 +39,14 @@ export function App() {
       </div>
       <h1>Vite + Preact</h1>
 
-      <Button
+      {/* <Button
         onClick={() => setButtonColor((c) => (c === 'red' ? 'blue' : 'red'))}
         color={buttonColor}
         backgroundColor="whitesmoke"
       >
         {buttonColor.toUpperCase()}
-      </Button>
+      </Button> */}
+      <Button2>Hihi</Button2>
     </>
   )
 }

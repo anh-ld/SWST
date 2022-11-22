@@ -1,11 +1,18 @@
-import type { ApplyPropsFn } from "./types";
+import { ParsedStyleObject } from './types';
 
-export const getStyleStringFromTemplate =
-  (strings: TemplateStringsArray, ...keys: ApplyPropsFn[]) =>
-  (props: any): string => {
-    const result = keys.reduce((acc, key, index) => acc + key(props) + strings[index + 1], `${strings[0]}`)
-    return result.replace(/ |\n/g, '');
-  };
+export const parseStyle =
+  (obj: unknown): ParsedStyleObject =>
+  Object.entries(obj as any).reduce((acc: ParsedStyleObject, [key, value]) => {
+    if (typeof value === 'object') {
+      if (!acc[key]) acc[key] = ''
+
+      acc[key] +=  parseStyle(value)['&']
+    } else {
+      acc['&'] += `${key.trim()}:${(value as string).trim()};`
+    }
+
+    return acc
+  }, {'&': ''})
 
 export const generateUniqueId = (prefix: string): string =>
   prefix +
