@@ -3,12 +3,21 @@
 - Simple CSS in JS library for `React` and `Preact`.
 - A proof-of-concept project, not meant to used in production.
 
+#### Installation
+Add `.npmrc` into project
+```bash
+@culee:registry=https://npm.pkg.github.com
+```
+
+```bash
+npm install @culee/swst
+```
 #### Usage
 
 ```js
 import { createElement } from 'preact';
 import { forwardRef } from 'preact/compat';
-import { styled, setup, injectStyle } from 'swst';
+import { styled, setup, injectStyle } from '@culee/swst';
 
 // init library
 setup({
