@@ -5,6 +5,6 @@ export type ParsedStyleObject = {
 export type Config = {
   prefix?: string
   createElement?: any
-  forwardRef?: any
   shouldForwardProp?: ((name: string) => boolean) | undefined
+  theme?: any
 }

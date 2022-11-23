@@ -2,12 +2,7 @@ import { Config } from './types';
 import { generateUniqueId, parseStyle } from './utils';
 
 let styleElement: HTMLStyleElement;
-let config: Config = {
-  prefix: 'swst',
-  createElement: undefined,
-  forwardRef: undefined,
-  shouldForwardProp: undefined
-};
+let config: Config = { prefix: 'swst' };
 
 let styleMap = new Map<string, string>();
 
@@ -19,11 +14,12 @@ const setup = (setupConfig: Config = {}): void => {
   document.head.appendChild(styleElement);
 };
 
-const styled = (tag: string, styles: any, forwardRef = true) => {
-  const { createElement, forwardRef: forwardRefFn, prefix, shouldForwardProp } = config
+const styled = (tag: string, styles: any, forwardRefFn?: any) => {
+  const Component = <T>(props: T, ref = undefined) => {
+    const { createElement, prefix, shouldForwardProp, theme } = config;
 
-  function Component<T>(props: T, ref = undefined) {
-    const styleObject = typeof styles === 'function' ? styles(props): styles;
+    const themeStyle = theme && theme()
+    const styleObject = typeof styles === 'function' ? styles(props as any, themeStyle as any): styles;
     const parsedStyleObject = parseStyle(styleObject)
     let className = '', passedProps = {} as T
 
@@ -52,7 +48,7 @@ const styled = (tag: string, styles: any, forwardRef = true) => {
     return (createElement)(tag, { ...passedProps, ref, className: className.trim() })
   }
 
-  return forwardRef && forwardRefFn ? (forwardRefFn)(Component) : Component;
+  return forwardRefFn ? (forwardRefFn)(Component) : Component;
 }
 
 const injectStyle = (style: string): void => {

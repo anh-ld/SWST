@@ -18,11 +18,11 @@ npm install @culee/swst
 import { createElement } from 'preact';
 import { forwardRef } from 'preact/compat';
 import { styled, setup, injectStyle } from '@culee/swst';
+import { useContext, useState } from 'preact/hooks'
 
 // init library
 setup({
   createElement,
-  forwardRef,
   shouldForwardProp: (name) => !name.startsWith('$'),
 });
 
@@ -52,7 +52,7 @@ const StyledCard = styled('div', {
 
 const StyledButton = styled('button', (props: any) => ({
   'background-color': props.$count % 2 === 0 ? '#d4a' : '#3b4',
-}))
+}), forwardRef)
 
 function App() {
   const [count, setCount] = useState(0)
