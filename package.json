@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:library": "vite build --config build.js"
   },
   "dependencies": {
     "preact": "^10.11.2"

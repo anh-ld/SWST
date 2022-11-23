@@ -3,7 +3,7 @@ import { generateUniqueId, parseStyle } from './utils';
 
 let styleElement: HTMLStyleElement;
 let config: Config = {
-  prefix: 'g',
+  prefix: 'swst',
   createElement: undefined,
   forwardRef: undefined,
   shouldForwardProp: undefined
