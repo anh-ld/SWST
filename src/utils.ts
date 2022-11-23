@@ -15,5 +15,5 @@ export const parseStyle =
   }, {'&': ''})
 
 export const generateUniqueId = (prefix: string): string =>
-  prefix +
+  prefix + "_" +
   (performance.now() + Math.random()).toString(36).split('.')[1];

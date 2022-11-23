@@ -1,13 +1,30 @@
 import { useState, useRef } from 'preact/hooks'
 import preactLogo from './assets/preact.svg'
-import { setup, styled } from '../src/'
+import { setup, styled, injectStyle } from '../src/'
 import { createElement } from 'preact'
 import { forwardRef } from 'preact/compat';
 
 setup({
   createElement,
   forwardRef,
+  shouldForwardProp: (name) => !name.startsWith('$')
 })
+
+injectStyle(`
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+	}
+
+	70% {
+		transform: scale(1);
+	}
+
+	100% {
+		transform: scale(0.95);
+	}
+}
+`)
 
 const ImgStyle = {
   height: '6em',
@@ -36,7 +53,9 @@ const StyledCard = styled('div', {
 
 const StyledReadTheDocs = styled('p', {
   color: '#246ee4',
-  'font-weight': 500
+  'font-weight': 500,
+  animation: 'pulse 1s infinite',
+
 })
 
 const StyledButton = styled('button', (props: any) => ({
@@ -46,7 +65,7 @@ const StyledButton = styled('button', (props: any) => ({
   'font-size': '1em',
   'font-weight': 500,
   'font-family': 'inherit',
-  'background-color': props.count % 2 === 0 ? '#d4a' : '#3b4',
+  'background-color': props.$count % 2 === 0 ? '#d4a' : '#3b4',
   cursor: 'pointer'
 }))
 
@@ -70,7 +89,7 @@ export function App() {
       <StyledCard>
         <StyledButton
           onClick={() => setCount((count) => count + 1)}
-          count={count}
+          $count={count}
           ref={buttonRef}
         >
           count is {count}
