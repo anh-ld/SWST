@@ -3,6 +3,10 @@
 - Simple CSS in JS library for `React` and `Preact`.
 - A proof-of-concept project, not meant to used in production.
 
+#### Preview
+- CSR: [https://swst.vercel.app/](https://swst.vercel.app/)
+- SSR: [https://swst-ssr.onrender.com/](https://swst-ssr.onrender.com/)
+
 #### Installation
 Add `.npmrc` into project
 ```bash
@@ -74,8 +78,30 @@ function App() {
 }
 ```
 
+- SSR
+
+```html
+// index.html
+<style id="swst"><!--app-css--></style>
+```
+
+```js
+// server.js
+import { extractStyle } from 'swst';
+
+app.use('*', (req, res) => {
+  ...
+
+  const appCss = extractStyle();
+  template = htmlTemplate.replace(`<!--app-css-->`, appCss)
+
+  return template
+})
+```
+
 #### TODO
-- [ ] Extracts CSS in SSR mode.
+- [x] Extracts CSS in SSR mode.
+- [ ] Media Query
 
 #### Inspiration
 - [goober](https://goober.rocks)

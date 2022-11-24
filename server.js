@@ -103,7 +103,7 @@ export async function createServer(
 if (!isTest) {
   createServer().then(({ app }) =>
     app.listen(process.env.PORT || 5173, () => {
-      console.log('http://localhost:5173')
+      console.log('App is running at port', process.env.PORT || 5173)
     })
   )
 }
