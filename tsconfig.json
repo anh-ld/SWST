@@ -17,6 +17,6 @@
     "jsx": "react-jsx",
     "jsxImportSource": "preact"
   },
-  "include": ["playground"],
+  "include": ["playground", "server.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

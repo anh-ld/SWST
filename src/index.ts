@@ -1,17 +1,36 @@
-import { Config } from './types';
+import type { Config } from './types';
 import { generateUniqueId, parseStyle } from './utils';
 
 let styleElement: HTMLStyleElement;
 let config: Config = { prefix: 'swst' };
-
 let styleMap = new Map<string, string>();
+let serverStyleSheet: string[] = [];
+
+const isServer = typeof window === 'undefined'
 
 const setup = (setupConfig: Config = {}): void => {
   config = { ...config, ...setupConfig };
 
-  styleElement = document.createElement('style');
-  styleElement.setAttribute('id', config?.prefix || '');
-  document.head.appendChild(styleElement);
+  if (!isServer) {
+    const ssrStyleElement: HTMLStyleElement | null = document.querySelector(`#${config?.prefix}`)
+
+    if (ssrStyleElement) {
+      styleElement = ssrStyleElement
+      const styleContent = ssrStyleElement.innerText
+      const rules = styleContent.match(/(.*?){.*?}/g) || []
+
+      for (const rule of rules) {
+        const className = rule.match(/^.(\w|\d)*/g)?.[0] || ''
+        const styleValue = rule.replaceAll(className, '&')
+        styleMap.set(styleValue, className.slice(1))
+      }
+    }
+    else {
+      styleElement = document.createElement('style');
+      styleElement.setAttribute('id', config?.prefix || '');
+      document.head.appendChild(styleElement);
+    }
+  }
 };
 
 const styled = (tag: string, styles: any, forwardRefFn?: any) => {
@@ -33,7 +52,11 @@ const styled = (tag: string, styles: any, forwardRefFn?: any) => {
       } else {
         styleClassName = generateUniqueId(prefix || '');
         styleMap.set(styleString, styleClassName);
-        styleElement.sheet?.insertRule(styleString.replace(/&/g, `.${styleClassName}`));
+
+        let cssRule = styleString.replace(/&/g, `.${styleClassName}`)
+        
+        if (isServer) serverStyleSheet.push(cssRule)
+        else styleElement.sheet?.insertRule(cssRule);
       }
 
       className = className + ' ' + styleClassName
@@ -55,4 +78,6 @@ const injectStyle = (style: string): void => {
   if (styleElement) styleElement.sheet?.insertRule(style)
 }
 
-export { styled, setup, injectStyle };
+const extractStyle = () => serverStyleSheet.join('');
+
+export { styled, setup, injectStyle, extractStyle };

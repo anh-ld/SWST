@@ -20,7 +20,7 @@ const StyledViteImg = styled('img', {
 const StyledPreactImg = styled('img', {
   ...ImgStyle,
 
-  '&:hover': {
+  '&:hover,    &:focus': {
     filter: 'drop-shadow(0 0 2em #673ab8aa)'
   }
 })
