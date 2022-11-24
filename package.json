@@ -12,8 +12,8 @@
     "dev:ssr": "node server",
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --ssr playground/entry-server.tsx --outDir dist/server",
-    "build:ssr": "rm -rf dist && npm run build:client && npm run build:server",
-    "build:csr": "rm -rf dist && tsc && vite build",
+    "build:csr": "rm -rf dist && npm install && tsc && vite build",
+    "build:ssr": "rm -rf dist && npm install && npm run build:client && npm run build:server",
     "preview:csr": "vite preview",
     "preview:ssr": "NODE_ENV=production node server.js",
     "build:library": "vite build --config build.js"
