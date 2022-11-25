@@ -1,4 +1,4 @@
-import type { Config } from './types';
+import type { Config, Styles } from './types';
 import { generateUniqueId, parseStyle } from './utils';
 
 let styleElement: HTMLStyleElement;
@@ -33,14 +33,15 @@ const setup = (setupConfig: Config = {}): void => {
   }
 };
 
-const styled = (tag: string, styles: any, forwardRefFn?: any) => {
-  const Component = <T>(props: T, ref = undefined) => {
+const styled = (tag: string, styles: Styles, forwardRefFn?: any) => {
+  const Component = <T extends { class?: string }>(props: T, ref = undefined) => {
     const { createElement, prefix, shouldForwardProp, theme } = config;
 
     const themeStyle = theme && theme()
-    const styleObject = typeof styles === 'function' ? styles(props as any, themeStyle as any): styles;
+    const styleObject = typeof styles === 'function' ? styles(props, themeStyle): styles;
     const parsedStyleObject = parseStyle(styleObject)
-    let className = '', passedProps = {} as T
+
+    let className = props.class || '', passedProps = {} as T
 
     for (const key in parsedStyleObject) {
       const value = parsedStyleObject[key]
@@ -56,7 +57,7 @@ const styled = (tag: string, styles: any, forwardRefFn?: any) => {
         let cssRule = styleString.replace(/&/g, `.${styleClassName}`)
         
         if (isServer) serverStyleSheet.push(cssRule)
-        else styleElement.sheet?.insertRule(cssRule);
+        else styleElement.sheet?.insertRule(cssRule, styleElement.sheet.cssRules.length);
       }
 
       className = className + ' ' + styleClassName

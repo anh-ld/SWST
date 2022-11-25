@@ -101,7 +101,7 @@ app.use('*', (req, res) => {
 
 #### TODO
 - [x] Extracts CSS in SSR mode.
-- [ ] Media Query
+- [x] Media Query
 
 #### Inspiration
 - [goober](https://goober.rocks)

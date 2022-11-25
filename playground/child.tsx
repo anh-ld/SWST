@@ -20,7 +20,7 @@ const StyledViteImg = styled('img', {
 const StyledPreactImg = styled('img', {
   ...ImgStyle,
 
-  '&:hover,    &:focus': {
+  '&:hover, &:focus': {
     filter: 'drop-shadow(0 0 2em #673ab8aa)'
   }
 })
@@ -43,7 +43,7 @@ const StyledButton = styled('button', (props: any, theme: any) => ({
   'font-weight': 500,
   'font-family': 'inherit',
   'background-color': props.$count % 2 === 0 ? '#d4a' : '#3b4',
-  color: theme.theme === 'dark' ? '#fff' : '#000',
+  color: '#fff',
   cursor: 'pointer'
 }), forwardRef)
 
@@ -76,6 +76,17 @@ const Box = styled('div', (_: any, theme: any) => ({
 
 const Heading = styled('h1', (_: any, theme: any) => ({
   color: theme.theme === 'dark' ? '#fff' : '#000',
+  'line-height': 1.1,
+  'font-size': '2rem',
+  transition: 'font-size 1s',
+  
+  '@media screen and (min-width: 768px)': {
+    'font-size': '2.25rem',
+    
+    '&:hover': {
+      'font-size': '2.5rem',
+    }
+  },
 }))
 
 function Child() {
@@ -84,7 +95,6 @@ function Child() {
   const buttonRef = useRef()
 
   console.log('Button Ref', buttonRef.current)
-  console.log('Theme', theme)
 
   return (
     <Box>
@@ -103,6 +113,7 @@ function Child() {
             onClick={() => setCount((count) => count + 1)}
             $count={count}
             ref={buttonRef}
+            class="aaa"
           >
             count is {count}
           </StyledButton>
