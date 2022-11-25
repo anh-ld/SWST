@@ -1,6 +1,6 @@
 {
   "name": "@culee/swst",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "main": "dist/index.umd.js",
   "module": "dist/index.js",
@@ -16,7 +16,8 @@
     "build:ssr": "rm -rf dist && npm install && npm run build:client && npm run build:server",
     "preview:csr": "vite preview",
     "preview:ssr": "NODE_ENV=production node server.js",
-    "build:library": "vite build --config build.js"
+    "build:library": "vite build --config build.js",
+    "format": "npx prettier --write ."
   },
   "dependencies": {
     "compression": "^1.7.4",
@@ -29,6 +30,7 @@
     "@preact/preset-vite": "^2.4.0",
     "@types/compression": "^1.7.2",
     "@types/express": "^4.17.14",
+    "prettier": "2.8.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.3",
     "vite": "^3.2.3"
@@ -36,5 +38,21 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/culee/SWST.git"
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "bracketSpacing": true,
+    "htmlWhitespaceSensitivity": "ignore",
+    "insertPragma": false,
+    "jsxSingleQuote": false,
+    "printWidth": 80,
+    "proseWrap": "preserve",
+    "quoteProps": "as-needed",
+    "requirePragma": false,
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "all",
+    "useTabs": false
   }
 }
