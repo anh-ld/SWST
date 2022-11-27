@@ -1,0 +1,7 @@
+name = "swst-ssr"
+main = "worker.js"
+compatibility_date = "2022-11-27"
+node_compat=true
+
+[site]
+bucket = "./dist/client"

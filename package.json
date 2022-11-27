@@ -10,6 +10,7 @@
   "scripts": {
     "dev:csr": "vite",
     "dev:ssr": "node server",
+    "dev:worker": "node_modules/wrangler/bin/wrangler.js dev",
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --ssr playground/entry-server.tsx --outDir dist/server",
     "build:csr": "rm -rf dist && npm install && tsc && vite build",
@@ -17,6 +18,7 @@
     "preview:csr": "vite preview",
     "preview:ssr": "NODE_ENV=production node server.js",
     "build:library": "vite build --config build.js",
+    "deploy:worker": "node_modules/wrangler/bin/wrangler.js publish",
     "format": "npx prettier --write ."
   },
   "dependencies": {
@@ -27,13 +29,14 @@
     "serve-static": "^1.15.0"
   },
   "devDependencies": {
+    "@cloudflare/kv-asset-handler": "^0.2.0",
     "@preact/preset-vite": "^2.4.0",
     "@types/compression": "^1.7.2",
     "@types/express": "^4.17.14",
     "prettier": "2.8.0",
-    "ts-node": "^10.9.1",
     "typescript": "^4.9.3",
-    "vite": "^3.2.3"
+    "vite": "^3.2.3",
+    "wrangler": "^2.4.4"
   },
   "repository": {
     "type": "git",

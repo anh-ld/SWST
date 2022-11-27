@@ -5,8 +5,8 @@
 
 #### Preview
 
-- CSR: [https://swst.vercel.app/](https://swst.vercel.app/)
-- SSR: [https://swst-ssr.onrender.com/](https://swst-ssr.onrender.com/)
+- CSR: [swst.vercel.app](https://swst.vercel.app/)
+- SSR: [swst-ssr.sfns.workers.dev](https://swst-ssr.sfns.workers.dev/)
 
 #### Installation
 
