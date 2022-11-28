@@ -127,8 +127,18 @@ app.use('*', (req, res) => {
 
 - [x] Extracts CSS in SSR mode.
 - [x] Media Query
+- []  Vendor prefix
+- []  Atomic CSS
 
 #### Inspiration
 
 - [goober](https://goober.rocks)
 - [styletron](https://styletron.org/)
+
+#### Thoughtful articles and videos
+
+- [Building the New Facebook with React and Relay | Frank Yan](https://www.youtube.com/watch?v=9JZHodNR184)
+- [Atomic CSS-in-JS](https://sebastienlorber.com/atomic-css-in-js)
+- [Why We're Breaking Up with CSS-in-JS](https://dev.to/srmagura/why-were-breaking-up-wiht-css-in-js-4g9b)
+- [A Thorough Analysis of CSS-in-JS](https://css-tricks.com/a-thorough-analysis-of-css-in-js/)
+- [The unseen performance costs of modern CSS-in-JS libraries in React apps](https://calendar.perfplanet.com/2019/the-unseen-performance-costs-of-css-in-js-in-react-apps/)
