@@ -72,7 +72,6 @@ const StyledWrapper = styled('div', {
 
 const Box = styled('div', (_: any, theme: any) => ({
   'background-color': theme.theme === 'light' ? '#fff' : '#000',
-  width: '100vw',
   'min-height': '100vh',
   display: 'flex',
   'align-items': 'center',
