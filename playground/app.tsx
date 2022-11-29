@@ -28,7 +28,7 @@ injectStyle(`
 `);
 
 export function App() {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light');
 
   return (
     <Theme.Provider value={{ theme, setTheme }}>

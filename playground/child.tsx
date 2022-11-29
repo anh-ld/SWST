@@ -1,137 +1,111 @@
 import { useState, useRef, useContext } from 'preact/hooks';
-import preactLogo from './assets/preact.svg';
 import { styled } from '../src/';
 import { forwardRef } from 'preact/compat';
 import { Theme } from './app';
+import DATA from './data.json';
 
-const ImgStyle = {
-  height: '6em',
-  padding: '1.5em',
-};
-
-const StyledViteImg = styled('img', {
-  ...ImgStyle,
-
-  '&:hover': {
-    filter: 'drop-shadow(0 0 2em #646cffaa)',
-  },
-});
-
-const StyledPreactImg = styled('img', {
-  ...ImgStyle,
-
-  '&:hover, &:focus': {
-    filter: 'drop-shadow(0 0 2em #673ab8aa)',
-  },
-});
-
-const StyledCard = styled('div', {
-  padding: '2em',
-});
-
-const StyledReadTheDocs = styled('p', {
-  color: '#246ee4',
-  'font-weight': 500,
-  animation: 'pulse 1s infinite',
-});
-
-const StyledButton = styled(
+const NewQuoteButton = styled(
   'button',
   (props: any, theme: any) => ({
     'border-radius': '8px',
     border: '1px solid transparent',
-    padding: '0.6em 1.2em',
+    padding: '0.4em 0.8em',
     'font-size': '1em',
     'font-weight': 500,
     'font-family': 'inherit',
-    'background-color': props.$count % 2 === 0 ? '#d4a' : '#3b4',
-    color: '#fff',
+    'background-color': theme.theme === 'dark' ? '#f5f5f5' : '#262626',
+    color: theme.theme === 'dark' ? '#171717' : '#fafafa',
     cursor: 'pointer',
+    'margin-top': '20px',
+
+    '&:hover': {
+      'background-color': theme.theme === 'dark' ? '#e5e5e5' : '#404040',
+    },
+
+    '@media screen and (min-width: 768px)': {
+      padding: '0.6em 1.2em',
+      'background-color': theme.theme === 'dark' ? '#f5f5f5' : '#262626',
+    },
   }),
   forwardRef,
 );
 
-const StyledSwitchThemeButton = styled('button', (props: any, theme: any) => ({
-  'border-radius': '8px',
-  border: '1px solid transparent',
-  padding: '0.6em 1.2em',
-  'font-size': '1em',
-  'font-weight': 500,
-  'font-family': 'inherit',
-  'background-color': '#11a',
+const SwitchThemeButton = styled('button', (props: any, theme: any) => ({
+  padding: '0',
+  border: 'none',
+  'font-size': '3em',
   color: 'white',
   cursor: 'pointer',
+  'margin-top': '20px',
+  'background-color': 'transparent',
 }));
 
-const StyledWrapper = styled('div', {
-  'max-width': '1280px',
-  margin: '0 auto',
-  padding: '2rem',
-  'text-align': 'center',
-});
-
 const Box = styled('div', (_: any, theme: any) => ({
-  'background-color': theme.theme === 'light' ? '#fff' : '#000',
+  'background-color': theme.theme === 'light' ? '#fafafa' : '#171717',
   'min-height': '100vh',
   display: 'flex',
   'align-items': 'center',
+  'justify-content': 'center',
+  padding: '24px',
 }));
 
-const Heading = styled('h1', (_: any, theme: any) => ({
-  color: theme.theme === 'dark' ? '#fff' : '#000',
-  'line-height': 1.1,
-  'font-size': '2rem',
-  transition: 'font-size 1s',
+const InnerBox = styled('div', (_: any, theme: any) => ({
+  'text-align': 'center',
+  'max-width': '800px'
+}));
+
+const Quote = styled('h1', (_: any, theme: any) => ({
+  "font-size": '24px',
+  'font-weight': 'bold',
+  'font-family': 'ui-sans-serif , system-ui, sans-serif',
+  'line-height': 1.25,
 
   '@media screen and (min-width: 768px)': {
-    'font-size': '2.25rem',
-
-    '&:hover': {
-      'font-size': '2.5rem',
-    },
+    'font-size': '36px',
+    color: theme.theme === 'dark' ? '#fafafa' :  '#171717',
   },
+
+  color: theme.theme === 'dark' ? '#fafafa' :  '#171717',
 }));
+
+const Author = styled('h2', (_: any, theme: any) => ({
+  "font-size": '16px',
+  'font-weight': 500,
+  'font-family': 'ui-sans-serif , system-ui, sans-serif',
+  color: theme.theme === 'dark' ? '#d4d4d4' : '#525252'
+}))
 
 function Child() {
   const { theme, setTheme } = useContext(Theme);
-  const [count, setCount] = useState(0);
+  const [quote, setQuote] = useState(() => DATA[Math.floor(Math.random() * DATA.length)]);
   const buttonRef = useRef();
 
   console.log('Button Ref', buttonRef.current);
 
+  const changeQuote = () => {
+    let newQuote = { id: -1, quote: '', author: '' };
+
+    while (newQuote?.id === -1 || newQuote?.id === quote.id) {
+      newQuote = DATA[Math.floor(Math.random() * DATA.length)];
+    }
+
+    setQuote(newQuote);
+  };
+
   return (
     <Box>
-      <StyledWrapper>
+      <InnerBox>
+        <Quote>"{quote.quote}"</Quote>
+        <Author>{quote.author}</Author>
+        <NewQuoteButton ref={buttonRef} onClick={changeQuote}>
+          New Quote
+        </NewQuoteButton>
         <div>
-          <a href="https://vitejs.dev" target="_blank">
-            <StyledViteImg src="/vite.svg" alt="Vite logo" />
-          </a>
-          <a href="https://preactjs.com" target="_blank">
-            <StyledPreactImg src={preactLogo} alt="Preact logo" />
-          </a>
+          <SwitchThemeButton onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+            {theme === 'dark' ? '🏙' : '🌃'}
+          </SwitchThemeButton>
         </div>
-        <Heading>Vite + Preact</Heading>
-        <StyledCard>
-          <StyledButton
-            onClick={() => setCount(count => count + 1)}
-            $count={count}
-            ref={buttonRef}
-            class="aaa"
-          >
-            count is {count}
-          </StyledButton>
-        </StyledCard>
-        <div>
-          <StyledSwitchThemeButton
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          >
-            switch to {theme === 'dark' ? 'light' : 'dark'} theme
-          </StyledSwitchThemeButton>
-        </div>
-        <StyledReadTheDocs>
-          open console and inspect element to view generated CSS classes
-        </StyledReadTheDocs>
-      </StyledWrapper>
+      </InnerBox>
     </Box>
   );
 }

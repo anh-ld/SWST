@@ -21,6 +21,8 @@ async function handleEvent(event) {
     return new Response(html, {
       headers: { 'content-type': 'text/html' },
     });
+  } else if (pathname === '/favicon.ico') {
+    return new Response(null, { status: 403 });;
   } else {
     return await getAssetFromKV(event);
   }
