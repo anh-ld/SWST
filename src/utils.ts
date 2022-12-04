@@ -17,12 +17,12 @@ export const parseStyle = (obj: unknown): ParsedStyleObject =>
             acc[calcKey] += mediaStyle[mediaStyleKey];
           }
         } else {
-        /* pseudo properties */
+          /* pseudo properties */
           if (!acc[key]) acc[key] = '';
           acc[key] += parseStyle(value)['&'];
         }
       } else {
-      /* normal properties */
+        /* normal properties */
         acc['&'] += `${key.trim()}:${String(value).trim()};`;
       }
 

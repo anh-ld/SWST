@@ -127,8 +127,8 @@ app.use('*', (req, res) => {
 
 - [x] Extracts CSS in SSR mode.
 - [x] Media Query
-- [ ]  Vendor prefix
-- [ ]  Atomic CSS
+- [ ] Vendor prefix
+- [ ] Atomic CSS
 
 #### Inspiration
 

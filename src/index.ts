@@ -49,7 +49,9 @@ const styled = (tag: string, styles: Styles, forwardRefFn?: any) => {
 
     for (const key in parsedStyleObject) {
       const value = parsedStyleObject[key];
-      const styleString = `${key}{${value}}${key.startsWith('@media') ? '}' : ''}`;
+      const styleString = `${key}{${value}}${
+        key.startsWith('@media') ? '}' : ''
+      }`;
       let styleClassName;
 
       if (styleMap.has(styleString)) {

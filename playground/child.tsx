@@ -51,33 +51,35 @@ const Box = styled('div', (_: any, theme: any) => ({
 
 const InnerBox = styled('div', (_: any, theme: any) => ({
   'text-align': 'center',
-  'max-width': '800px'
+  'max-width': '800px',
 }));
 
 const Quote = styled('h1', (_: any, theme: any) => ({
-  "font-size": '24px',
+  'font-size': '24px',
   'font-weight': 'bold',
   'font-family': 'ui-sans-serif , system-ui, sans-serif',
   'line-height': 1.25,
 
   '@media screen and (min-width: 768px)': {
     'font-size': '36px',
-    color: theme.theme === 'dark' ? '#fafafa' :  '#171717',
+    color: theme.theme === 'dark' ? '#fafafa' : '#171717',
   },
 
-  color: theme.theme === 'dark' ? '#fafafa' :  '#171717',
+  color: theme.theme === 'dark' ? '#fafafa' : '#171717',
 }));
 
 const Author = styled('h2', (_: any, theme: any) => ({
-  "font-size": '16px',
+  'font-size': '16px',
   'font-weight': 500,
   'font-family': 'ui-sans-serif , system-ui, sans-serif',
-  color: theme.theme === 'dark' ? '#d4d4d4' : '#525252'
-}))
+  color: theme.theme === 'dark' ? '#d4d4d4' : '#525252',
+}));
 
 function Child() {
   const { theme, setTheme } = useContext(Theme);
-  const [quote, setQuote] = useState(() => DATA[Math.floor(Math.random() * DATA.length)]);
+  const [quote, setQuote] = useState(
+    () => DATA[Math.floor(Math.random() * DATA.length)],
+  );
   const buttonRef = useRef();
 
   console.log('Button Ref', buttonRef.current);
@@ -101,7 +103,9 @@ function Child() {
           New Quote
         </NewQuoteButton>
         <div>
-          <SwitchThemeButton onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+          <SwitchThemeButton
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          >
             {theme === 'dark' ? '🏙' : '🌃'}
           </SwitchThemeButton>
         </div>
